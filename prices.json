@@ -1,0 +1,7 @@
+{
+  "gemini-4-argon": { "input": 2, "output": 10 },
+  "gemini-3.8-flash": { "input": 0.75, "output": 3.75 },
+  "gemini-3.7-flash": { "input": 0.8, "output": 4 },
+  "gemini-3.1-flash-image": null,
+  "gemini-3.8-flash-tts": null
+}

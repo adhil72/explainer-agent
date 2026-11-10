@@ -1,0 +1,23 @@
+import { newJob, save } from '../src/job.ts';
+import { research } from '../src/steps/research.ts';
+import { makeOptions } from '../src/steps/options.ts';
+import { writeScript, showScript } from '../src/steps/script.ts';
+import { voice } from '../src/steps/voice.ts';
+import { images } from '../src/steps/images.ts';
+import { render } from '../src/steps/render.ts';
+import { summary, setLogFile } from '../src/ui.ts';
+import path from 'node:path';
+
+const job = newJob({ topic: 'how a jet engine works', formatId: 'reels', seconds: 30, language: 'English', audience: 'curious general audience', tone: 'Curious & energetic', theme: 'midnight', voice: 'Puck', images: true, visual: 'illustrated', model: 'gemini-3.8-flash' });
+setLogFile(path.join(job.dir, 'log.txt'));
+job.renderOpts = { scale: 1, fps: 30, quality: 'high', captions: true, sfx: true, music: 'none', musicVolume: 0.08, gl: 'egl' };
+await research(job); save(job);
+job.options = await makeOptions(job); save(job);
+job.chosen = job.options[0];
+job.script = await writeScript(job); save(job);
+showScript(job, job.script);
+await voice(job); save(job);
+await images(job);
+const out = await render(job);
+console.log(out);
+summary();
